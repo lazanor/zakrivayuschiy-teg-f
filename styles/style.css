@@ -189,6 +189,7 @@
   block-size: 100%;
   inline-size: 100%;
   overflow: visible;
+  transform-origin: center;
 }
 
 .button__text {
