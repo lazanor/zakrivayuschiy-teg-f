@@ -13,4 +13,477 @@
 .page {
   min-inline-size: 320px;
   min-block-size: 100dvb;
+  font-family: var(--font-regular), sans-serif;
+  font-weight: var(--font-regular-weight-text);
+  font-size: var(--font-regular-size, 18px);
+  background: url(../images/background.png), linear-gradient(#e7e7e7, #1a1a1a);
+  background-repeat: repeat, no-repeat;
+  background-size: 4px auto, cover;
+}
+
+/* 
+
++---------------------------------+
+|                                 |
+|   СТИЛИЗАЦИЯ СЕКЦИИ ЗАГОЛОВКА   | 
+|                                 |
++---------------------------------+
+
+*/
+
+.header {
+  /*Положение*/
+  margin: auto;
+  margin-block-start: 100px;
+  /*min-block-size: 323px;*/
+  inline-size: var(--section-width);
+
+  /*Оформление*/
+  background-color: var(--stroke-color, #fff);
+  border: 2px solid var(--accent-color, #000);
+  font-family: var(--font-accent), sans-serif;
+  text-align: center;
+}
+
+.header__title {
+  /*Положение*/
+  margin: auto;
+  /*margin-block-start: 128px;*/
+  margin-block-start: clamp(6.25rem, 2.629vw + 5.634rem, 8rem);
+
+  /*Оформление*/
+  font-size: var(--font-accent-title-size, 65px);
+  overflow: hidden;
+}
+
+.header__text {
+  /*Положение*/
+  margin: auto;
+  margin-block-start: 20px;
+  margin-block-end: clamp(
+    6.25rem,
+    2.629vw + 5.634rem,
+    8rem
+  ); /*В целом на макете зависимо от экрана меняется только этот параметр*/
+
+  /*Оформление*/
+  font-size: var(--font-accent-text-size, 23px);
+  text-transform: uppercase;
+}
+
+/* 
+
++-------------------------+
+|                         |
+|   СТИЛИЗАЦИЯ КАРТОЧКИ   | 
+|                         |
++-------------------------+
+
+*/
+
+.card {
+  /*inline-size: 696px;*/
+  /*Положение*/
+  inline-size: var(--section-width);
+  margin: auto;
+  margin-block-end: 52px;
+
+  /*Оформление*/
+  background-color: var(--stroke-color, #fff);
+  border: 2px solid var(--accent-color, #000);
+  display: flex;
+  flex-direction: column;
+}
+
+.card:first-child {
+  margin-block-start: 100px;
+}
+
+.card__title {
+  font-weight: var(--font-regular-weight-title);
+  padding: 4px 10px;
+  font-size: inherit;
+  min-block-size: 33px;
+}
+
+/*Стилизация картинки и водянного знака на ней*/
+.card__image {
+  position: relative;
+  background-image: url(../images/van-0.png);
+  background-position: center;
+  background-size: cover;
+  aspect-ratio: 1 / 1;
+}
+
+.card__image-title {
+  position: absolute;
+  inset-inline-end: 25px;
+  inset-block-start: 25px;
+  font-family: var(--font-accent), sans-serif;
+  font-size: var(--font-watermark-size, 14px);
+  opacity: 0.5;
+  text-shadow: 1px 0 var(--stroke-color, #fff), 0 1px var(--stroke-color, #fff),
+    -1px 0 var(--stroke-color, #fff), 0 -1px 0 var(--stroke-color, #fff);
+  mix-blend-mode: hard-light;
+}
+
+/*Поддержка обводки текста*/
+@supports (
+  (text-stroke: 1px var(--stroke-color, #fff)) or
+    (-webkit-text-stroke: 1px var(--stroke-color, #fff))
+) {
+  .card__image-title {
+    -webkit-text-stroke: 1px var(--stroke-color, #fff);
+    text-stroke: 1px var(--stroke-color, #fff);
+    text-shadow: none;
+    paint-order: stroke fill;
+    /*Если делать просто text-stroke, то он делает текст тоньше
+      Нашел вот такой способ со свойством paint-order*/
+  }
+}
+
+/* Это какой-то артефакт, но пусть пока будет
+.card__image-img {
+  inline-size: 100%;
+  border: 2px solid var(--accent-color, #000);
+}
+*/
+
+/*Стилизуем текст и кнопки*/
+.card__text {
+  margin: 25px;
+  margin-block-end: 0; /*Ранее было сделано через определение последнего элемента, но кажется смысла не имело, было более громоздким и проще сделать так*/
+}
+
+/*Стилизуем кнопки*/
+.card__buttons {
+  font-family: var(--font-accent);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 25px;
+  margin-left: auto;
+}
+
+/*Описываем сначала именно кнопки, элменты на них будут ниже*/
+.card__like-button,
+.card__icon-button {
+  position: relative;
+  background-color: transparent;
+  block-size: 38px;
+}
+
+.card__icon-button {
+  border: none;
+  padding: 0;
+}
+
+.card__like-button {
+  inline-size: 130px;
+  border: 2px solid var(--accent-color, #000);
+  transition: box-shadow 0.5s ease-in-out;
+}
+
+.like-icon {
+  position: relative;
+  block-size: 100%;
+  inline-size: 100%;
+  overflow: visible;
+}
+
+.button__text {
+  position: relative;
+  padding: 9px auto;
+  font-size: var(--font-btn-size, 14px);
+  color: var(--stroke-color, #fff);
+  mix-blend-mode: difference;
+  z-index: 3;
+}
+
+/*Тень при фокусе*/
+.card__like-button:focus-visible,
+.save-button:focus-visible {
+  outline: none;
+  box-shadow: 2px 2px var(--accent-color, #000);
+}
+
+.card__icon-button:focus-visible {
+  outline: none;
+  border: 2px solid var(--accent-color, #000);
+}
+
+/*Смена фона при наведении*/
+/*Элемент который будет затемнять*/
+.card__like-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-color: var(--accent-color, #000);
+  inline-size: 0%;
+  block-size: 100%;
+  transition: inline-size 0.5s ease-in-out;
+}
+
+/*Его растягивание на 100% при наведении на кнопку*/
+.card__like-button:hover::after {
+  inline-size: 100%;
+}
+
+/* СЕКЦИЯ ФИЛЬТРОВ ДЛЯ КАРТОЧЕК */
+
+.filter__blur {
+  filter: blur(15px);
+}
+
+.filter__sepia {
+  filter: sepia(0.6);
+}
+
+.filter__invert {
+  filter: invert(100%);
+}
+
+.filter__contrast {
+  filter: contrast(150%);
+}
+
+.filter__hue-rotate {
+  filter: hue-rotate(60deg);
+}
+
+.filter__grayscale {
+  filter: grayscale(70%);
+}
+
+.filter__brightness {
+  filter: brightness(200%);
+}
+
+.filter__sepia-invert {
+  filter: sepia(0.6) invert(100%);
+}
+
+/* 
+
++-----------------------------+
+|                             |
+|   СТИЛИ И АНИМАЦИя СЕРДЦА   |
+|                             |
++-----------------------------+
+
+*/
+
+.like-icon .core {
+  fill: transparent;
+  transition-delay: 0.03s;
+  transition: fill 0.3s ease-in-out;
+}
+
+.like-icon .main-body {
+  fill: transparent;
+  transition: fill 0.3s ease-in-out;
+  transition-delay: 0s;
+}
+
+/* Стили при наведении на сердце */
+
+.like-icon:hover .core {
+  fill: var(--heart-countur, #000);
+  transition-delay: 0s;
+}
+
+.like-icon:hover .main-body {
+  fill: var(--heart-countur, #000);
+  transition-delay: 0.05s;
+}
+
+/* Стили при зажатии сердца */
+
+.like-icon:active .core {
+  fill: var(--heart-fill, #f00);
+  transition-delay: 0s;
+}
+
+.like-icon:active .main-body {
+  fill: var(--heart-fill, #f00);
+  transition-delay: 0.05s;
+}
+
+.like-icon .heart {
+  transform-origin: center;
+}
+
+.like-icon .sparks {
+  transform-origin: center;
+  z-index: 4;
+}
+
+.like-icon.is-liked .heart {
+  fill: var(--heart-fill, #f00);
+  animation: like_click 0.3s ease-in 0.1s;
+}
+
+.like-icon.is-liked .sparks {
+  animation: sparks_shine 0.3s ease-in 0.3s;
+}
+
+@keyframes like_click {
+  from {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes sparks_shine {
+  from {
+    transform: scale(1);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* 
+
++---------------------------------------------+
+|                                             |
+|   СТИЛИЗАЦИЯ КНОПКИ "СОХРАНИТЬ НА ПАМЯТЬ"   |
+|                                             |
++---------------------------------------------+
+
+*/
+
+/* Описываем саму кнопку */
+.save-button {
+  position: relative;
+  display: block;
+  font-size: var(--font-btn-size, 14px);
+  block-size: 55px;
+  inline-size: 335px;
+  background-color: var(--stroke-color, #fff);
+  padding: auto;
+  font-family: var(--font-accent);
+  margin: auto;
+  margin-block-start: 50px;
+  margin-block-end: 105px;
+  border: 2px solid var(--accent-color, #000);
+  transition: box-shadow 0.5s ease-in-out;
+  color: var(--accent-color, #000);
+}
+
+/* Описываем иконку дискеты*/
+.save-button-image {
+  position: relative;
+  inline-size: 21px;
+  block-size: 21px;
+  object-fit: contain;
+  color: var(
+    --stroke-color,
+    #fff
+  ); /* тут работает color, так как внутри SVG используется currentColor */
+  z-index: 3;
+  mix-blend-mode: difference;
+}
+
+/* Этот псевдоэлемент у нас отвечает за черную заливку */
+.save-button::after {
+  content: "";
+  inset: 0;
+  z-index: 2;
+  position: absolute;
+  background-color: var(--accent-color, #000);
+  inline-size: 0%;
+  block-size: 100%;
+  transition: inline-size 0.5s ease-in-out;
+}
+
+/* Стили надписи на кнопке */
+.save-button-text {
+  position: relative;
+  z-index: 3;
+  mix-blend-mode: difference;
+  color: var(--stroke-color, #fff);
+}
+
+/* Свойство отвечает за развертку псевдоэлемента на весь размер родительского элемента*/
+.save-button:hover::after {
+  inline-size: 100%;
+}
+
+.save__window {
+  font-family: var(--font-accent), sans-serif;
+  font-size: var(--font-btn-size, 14px);
+  inline-size: var(--dialog-width, 353px);
+  padding: 30px;
+}
+
+.save__window[open] .save__window-message {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.save__window .save-button-text {
+  text-transform: uppercase;
+}
+
+.save__window .save-button {
+  margin: 0;
+  margin-top: 30px;
+  inline-size: 100%;
+}
+
+.save__window[open] .save__window-image {
+  margin: 12px 0;
+  inline-size: 39px !important;
+  block-size: 39px !important;
+  color: var(
+    --stroke-color,
+    #fff
+  ); /* тут работает color, так как внутри SVG используется currentColor */
+  mix-blend-mode: difference;
+}
+
+.save__window[open] .save-button-text {
+  inline-size: clamp(12.375rem, 3.38vw + 11.583rem, 14.625rem);
+  line-height: 150%;
+}
+
+.save__window[open]::backdrop {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+/* 
+
++--------------------------------+
+|                                |
+|   СТИЛИ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ   |
+|                                |
++--------------------------------+
+
+*/
+
+@media (width <= 375px) {
+  .page {
+    --section-width: 100%;
+    overflow: hidden;
+  }
+
+  .header,
+  .card {
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+  }
 }
