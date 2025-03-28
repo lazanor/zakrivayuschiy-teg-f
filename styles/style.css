@@ -16,10 +16,14 @@
   font-family: var(--font-regular), sans-serif;
   font-variation-settings: "wght" var(--font-regular-weight-text);
   font-size: var(--font-regular-size, 18px);
-  background-image: url(../images/background.png),
-    linear-gradient(#e7e7e7, #1a1a1a);
-  background-repeat: repeat, no-repeat;
-  background-size: 4px auto, cover;
+  background-image: var(
+    --bg-image,
+    repeating-linear-gradient(#d3d3d3, transparent 2px),
+    repeating-linear-gradient(90deg, #d3d3d3, transparent 2px),
+    linear-gradient(#e7e7e7, #1a1a1a)
+  );
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 /* 
