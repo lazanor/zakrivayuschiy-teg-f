@@ -18,8 +18,19 @@
   font-size: var(--font-regular-size, 18px);
   background-image: var(
     --bg-image,
-    repeating-linear-gradient(#d3d3d3, transparent 2px),
-    repeating-linear-gradient(90deg, #d3d3d3, transparent 2px),
+    repeating-linear-gradient(
+      #d3d3d3 0,
+      #d3d3d3 2px,
+      transparent 2px,
+      transparent 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      #d3d3d3 0,
+      #d3d3d3 2px,
+      transparent 2px,
+      transparent 4px
+    ),
     linear-gradient(#e7e7e7, #1a1a1a)
   );
   background-attachment: fixed;
@@ -38,40 +49,28 @@
 
 .header {
   /*Положение*/
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
   margin: auto;
   margin-block-start: 100px;
-  /*min-block-size: 323px;*/
   inline-size: var(--section-width);
+  block-size: var(--section-height);
 
   /*Оформление*/
   background-color: var(--stroke-color, #fff);
   border: 2px solid var(--accent-color, #000);
-  font-family: var(--font-accent), sans-serif;
+  font-family: var(--font-accent), fantasy;
   text-align: center;
 }
 
 .header__title {
-  /*Положение*/
-  margin: auto;
-  /*margin-block-start: 128px;*/
-  margin-block-start: clamp(6.25rem, 2.629vw + 5.634rem, 8rem);
-
-  /*Оформление*/
   font-size: var(--font-accent-title-size, 65px);
-  overflow: hidden;
+  overflow: auto;
 }
 
 .header__text {
-  /*Положение*/
-  margin: auto;
-  margin-block-start: 20px;
-  margin-block-end: clamp(
-    6.25rem,
-    2.629vw + 5.634rem,
-    8rem
-  ); /*В целом на макете зависимо от экрана меняется только этот параметр*/
-
-  /*Оформление*/
   font-size: var(--font-accent-text-size, 23px);
   text-transform: uppercase;
 }
@@ -105,15 +104,17 @@
 }
 
 .card__title {
-  font-weight: var(--font-regular-weight-title);
-  padding: 4px 10px;
+  font-variation-settings: "wght" var(--font-regular-weight-title);
+  padding: 6px 10px;
   font-size: inherit;
-  min-block-size: 33px;
+  /*min-block-size: 33px;*/
 }
 
 /*Стилизация картинки и водянного знака на ней*/
 .card__image {
   position: relative;
+  display: inline-block;
+  border: 2px solid var(--accent-color, #000);
   /*background-image: url(../images/van-0.png);
   background-position: center;
   background-size: cover;
@@ -122,16 +123,18 @@
 
 .card__image-img {
   position: relative;
+  display: block;
   aspect-ratio: 1 / 1;
   inline-size: 100%;
-  border: 2px solid var(--accent-color, #000);
+  object-fit: cover;
+  object-position: center;
 }
 
 .card__image-title {
   position: absolute;
   inset-inline-end: 25px;
   inset-block-start: 25px;
-  font-family: var(--font-accent), sans-serif;
+  font-family: var(--font-accent), fantasy;
   font-size: var(--font-watermark-size, 14px);
   opacity: 0.5;
   text-shadow: 1px 0 var(--stroke-color, #fff), 0 1px var(--stroke-color, #fff),
@@ -154,15 +157,23 @@
   }
 }
 
-/*Стилизуем текст и кнопки*/
+/*Стилизуем текст */
 .card__text {
   margin: 25px;
   margin-block-end: 0; /*Ранее было сделано через определение последнего элемента, но кажется смысла не имело, было более громоздким и проще сделать так*/
 }
 
-/*Стилизуем кнопки*/
+/*
+
++-------------------------------+
+|                               |
+|   ОТДЕЛЬНО СТИЛИЗУЕМ КНОПКИ   |
+|                               |
++-------------------------------+
+
+*/
+
 .card__buttons {
-  font-family: var(--font-accent);
   display: flex;
   align-items: center;
   gap: 12px;
@@ -171,22 +182,41 @@
 }
 
 /*Описываем сначала именно кнопки, элменты на них будут ниже*/
-.card__like-button,
-.card__icon-button {
+.button {
   position: relative;
-  background-color: transparent;
+  display: block;
+  background-color: var(--stroke-color, #fff);
+  font-family: var(--font-accent), fantasy;
+  font-size: var(--font-btn-size, 14px);
+  color: var(--accent-color, #000);
   block-size: 38px;
+  padding: auto;
+  margin: auto;
 }
 
+/* Описываем появление тени для кнопок лайк и сохранить */
+.button-btn {
+  border: 2px solid var(--accent-color, #000);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Отдельная стилизации кнопки сердца */
 .card__icon-button {
   border: none;
   padding: 0;
 }
 
+/* Отдельное описание размеров кнопки лайк */
 .card__like-button {
   inline-size: 130px;
-  border: 2px solid var(--accent-color, #000);
-  transition: box-shadow 0.5s ease-in-out;
+}
+
+/* Отдельное описание размеров кнопки "Сохранить на память" */
+.save-button {
+  block-size: 55px;
+  inline-size: var(--save-button-width, 335px);
+  margin-block-start: 50px;
+  margin-block-end: 105px;
 }
 
 .like-icon {
@@ -197,7 +227,8 @@
   transform-origin: center;
 }
 
-.button__text {
+.button__text,
+.save-button-text {
   position: relative;
   padding: 9px auto;
   font-size: var(--font-btn-size, 14px);
@@ -207,20 +238,20 @@
 }
 
 /*Тень при фокусе*/
-.card__like-button:focus-visible,
-.save-button:focus-visible {
+.button-btn:focus-visible {
   outline: none;
   box-shadow: 2px 2px var(--accent-color, #000);
 }
 
 .card__icon-button:focus-visible {
-  outline: none;
-  border: 2px solid var(--accent-color, #000);
+  border: none;
+  outline: 2px solid var(--accent-color, #000);
 }
 
 /*Смена фона при наведении*/
+
 /*Элемент который будет затемнять*/
-.card__like-button::after {
+.button-btn::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -232,7 +263,7 @@
 }
 
 /*Его растягивание на 100% при наведении на кнопку*/
-.card__like-button:hover::after {
+.button-btn:hover::after {
   inline-size: 100%;
 }
 
@@ -274,7 +305,7 @@
 
 +-----------------------------+
 |                             |
-|   СТИЛИ И АНИМАЦИя СЕРДЦА   |
+|   СТИЛИ И АНИМАЦИЯ СЕРДЦА   |
 |                             |
 +-----------------------------+
 
@@ -282,47 +313,43 @@
 
 .like-icon .core {
   fill: transparent;
-  transition-delay: 0.03s;
+  transition-delay: 0.03s linear;
   transition: fill 0.3s ease-in-out;
 }
 
 .like-icon .main-body {
   fill: transparent;
   transition: fill 0.3s ease-in-out;
-  transition-delay: 0s;
+  transition-delay: 0s linear;
 }
 
 /* Стили при наведении на сердце */
 
 .like-icon:hover .core {
   fill: var(--heart-countur, #000);
-  transition-delay: 0s;
+  transition-delay: 0s linear;
 }
 
 .like-icon:hover .main-body {
   fill: var(--heart-countur, #000);
-  transition-delay: 0.05s;
+  transition-delay: 0.05s linear;
 }
 
 /* Стили при зажатии сердца */
 
 .like-icon:active .core {
   fill: var(--heart-fill, #f00);
-  transition-delay: 0s;
+  transition-delay: 0s linear;
 }
 
 .like-icon:active .main-body {
   fill: var(--heart-fill, #f00);
-  transition-delay: 0.05s;
+  transition-delay: 0.05s linear;
 }
 
-.like-icon .heart {
-  transform-origin: center;
-}
-
+.like-icon .heart,
 .like-icon .sparks {
   transform-origin: center;
-  z-index: 4;
 }
 
 .like-icon.is-liked .heart {
@@ -334,33 +361,6 @@
   animation: sparks_shine 0.3s ease-in 0.3s;
 }
 
-@keyframes like_click {
-  from {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.25);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-
-@keyframes sparks_shine {
-  from {
-    transform: scale(1);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.25);
-    opacity: 1;
-  }
-  to {
-    transform: scale(1);
-    opacity: 0;
-  }
-}
-
 /* 
 
 +---------------------------------------------+
@@ -370,24 +370,6 @@
 +---------------------------------------------+
 
 */
-
-/* Описываем саму кнопку */
-.save-button {
-  position: relative;
-  display: block;
-  font-size: var(--font-btn-size, 14px);
-  block-size: 55px;
-  inline-size: 335px;
-  background-color: var(--stroke-color, #fff);
-  padding: auto;
-  font-family: var(--font-accent);
-  margin: auto;
-  margin-block-start: 50px;
-  margin-block-end: 105px;
-  border: 2px solid var(--accent-color, #000);
-  transition: box-shadow 0.5s ease-in-out;
-  color: var(--accent-color, #000);
-}
 
 /* Описываем иконку дискеты*/
 .save-button-image {
@@ -403,33 +385,8 @@
   mix-blend-mode: difference;
 }
 
-/* Этот псевдоэлемент у нас отвечает за черную заливку */
-.save-button::after {
-  content: "";
-  inset: 0;
-  z-index: 2;
-  position: absolute;
-  background-color: var(--accent-color, #000);
-  inline-size: 0%;
-  block-size: 100%;
-  transition: inline-size 0.5s ease-in-out;
-}
-
-/* Стили надписи на кнопке */
-.save-button-text {
-  position: relative;
-  z-index: 3;
-  mix-blend-mode: difference;
-  color: var(--stroke-color, #fff);
-}
-
-/* Свойство отвечает за развертку псевдоэлемента на весь размер родительского элемента*/
-.save-button:hover::after {
-  inline-size: 100%;
-}
-
 .save__window {
-  font-family: var(--font-accent), sans-serif;
+  font-family: var(--font-accent), fantasy;
   font-size: var(--font-btn-size, 14px);
   inline-size: var(--dialog-width, 353px);
   padding: 30px;
@@ -449,12 +406,13 @@
   margin: 0;
   margin-top: 30px;
   inline-size: 100%;
+  block-size: 38px;
 }
 
 .save__window[open] .save__window-image {
   margin: 12px 0;
-  inline-size: 39px !important;
-  block-size: 39px !important;
+  inline-size: 39px;
+  block-size: 39px;
   color: var(
     --stroke-color,
     #fff
@@ -484,12 +442,26 @@
 @media (width <= 375px) {
   .page {
     --section-width: 100%;
-    overflow: hidden;
+    overflow: auto;
   }
 
   .header,
   .card {
     margin-inline-start: 0;
     margin-inline-end: 0;
+  }
+
+  .save-button {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    block-size: 80px;
+  }
+
+  .save-button-image {
+    inline-size: 28px;
+    block-size: 28px;
   }
 }
