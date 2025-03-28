@@ -14,7 +14,7 @@
   min-inline-size: 320px;
   min-block-size: 100dvb;
   font-family: var(--font-regular), sans-serif;
-  font-weight: var(--font-regular-weight-text);
+  font-variation-settings: "wght" var(--font-regular-weight-text);
   font-size: var(--font-regular-size, 18px);
   background: url(../images/background.png), linear-gradient(#e7e7e7, #1a1a1a);
   background-repeat: repeat, no-repeat;
@@ -109,10 +109,17 @@
 /*Стилизация картинки и водянного знака на ней*/
 .card__image {
   position: relative;
-  background-image: url(../images/van-0.png);
+  /*background-image: url(../images/van-0.png);
   background-position: center;
   background-size: cover;
+  aspect-ratio: 1 / 1;*/
+}
+
+.card__image-img {
+  position: relative;
   aspect-ratio: 1 / 1;
+  inline-size: 100%;
+  border: 2px solid var(--accent-color, #000);
 }
 
 .card__image-title {
@@ -141,13 +148,6 @@
       Нашел вот такой способ со свойством paint-order*/
   }
 }
-
-/* Это какой-то артефакт, но пусть пока будет
-.card__image-img {
-  inline-size: 100%;
-  border: 2px solid var(--accent-color, #000);
-}
-*/
 
 /*Стилизуем текст и кнопки*/
 .card__text {
